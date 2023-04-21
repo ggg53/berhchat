@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.js"></script>
+    <title>College Party Finder</title>
+</head>
+<body>
+    <div class="content" id="content">
+        <h1>College Party Finder</h1>
+        <input type="password" id="password" placeholder="Enter password">
+        <button id="enterButton" onclick="checkPassword()">Enter</button>
+        <div id="partySection" style="display: none;">
+            <!-- Add your nearby college party information here. -->
+            <h2>Nearby College Parties</h2>
+            
+            <h3>Sports Team Houses</h3>
+            <div id="sportsTeamHouses">
+                <!-- Add sports team house information here. -->
+                <p>Address: 416 22nd Street, Allentown PA</p>
+                <p>Date: Friday, April 21st</p>
+                <p>Time: 11:30 PM</p>
+                <button onclick="attendParty()">Attend this party</button>
+            </div>
+
+            <h3>Frat Houses</h3>
+            <div id="fratHouses">
+                <!-- Add frat house information here. -->
+            </div>
+
+            <h3>Sorority Houses</h3>
+            <div id="sororityHouses">
+                <!-- Add sorority house information here. -->
+            </div>
+        </div>
+    </div>
+    <script>
+      let attempts = 3;
+
+      function checkPassword() {
+        const passwordInput = document.getElementById('password');
+        const enterButton = document.getElementById('enterButton');
+        const partySection = document.getElementById('partySection');
+        const content = document.getElementById('content');
+    
+        const correctPassword = '416'; // Replace 'yourPassword' with the desired password
+    
+        if (passwordInput.value === correctPassword) {
+          alert('Congratulations! You entered the correct password.');
+          partySection.style.display = 'block';
+          passwordInput.style.display = 'none';
+          enterButton.style.display = 'none';
+        } else {
+          attempts--;
+          if (attempts > 0) {
+            alert('Invalid password. You have ' + attempts + ' attempts remaining.');
+          } else {
+            content.innerHTML = '';
+          }
+        }
+      }
+      
+      function attendParty() {
+        const partyInfo = {
+          address: '416 22nd Street, Allentown PA',
+          date: 'Friday, April 21st',
+          time: '11:30 PM'
+        };
+        const encodedPartyInfo = encodeURIComponent(JSON.stringify(partyInfo));
+        window.location.href = 'qr_code.html?partyInfo=' + encodedPartyInfo;
+      }
+    </script>
+</body>
+</html>
